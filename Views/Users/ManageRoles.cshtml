@@ -1,0 +1,31 @@
+﻿@model UserRolesViewModel
+ 
+@{
+    ViewData["Title"] = "Groupe d'utilisateurs";
+}
+
+<form asp-action="UpdateRoles" method="post">
+    <div class="card shadow w-25 mx-auto">
+        <div class="card-header">
+            <strong class="card-title">@ViewData["Title"]</strong><br />
+            <small>Affecter @Model.UserFullName à un groupe d'utilisateurs</small>
+        </div>
+        <div class="card-body">
+            <input type="hidden" asp-for="UserId" />
+            @for (int i = 0; i < Model.Roles.Count; i++)
+            {
+                <div class="form-check">
+                    <input type="hidden" asp-for="@Model.Roles[i].DisplayValue" />
+                    <input asp-for="@Model.Roles[i].IsSelected" class="form-check-input" />
+                    <label class="form-check-label pb-2" asp-for="@Model.Roles[i].IsSelected">
+                        @Model.Roles[i].DisplayValue
+                    </label>
+                </div>
+            }
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">Enregistrer</button>
+            <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+        </div>
+    </div>
+</form>

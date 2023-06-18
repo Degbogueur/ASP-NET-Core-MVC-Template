@@ -1,0 +1,55 @@
+﻿@model PermissionsFormViewModel
+
+@{
+    ViewData["Title"] = "Habilitations";
+}
+
+<form asp-action="UpdatePermissions" method="post">
+    <div class="card shadow w-50 mx-auto">
+        <div class="card-header">
+            <strong class="card-title">@ViewData["Title"]</strong><br />
+            <small>Affecter des habilitations au groupe @Model.RoleName</small>
+        </div>
+        <div class="card-body">
+            <input type="hidden" asp-for="RoleId" />
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Module</th>
+                        <th>Permission</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.RoleClaims.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <input type="hidden" asp-for="@Model.RoleClaims[i].DisplayValue" />
+                                    <input asp-for="@Model.RoleClaims[i].IsSelected" class="form-check-input" />
+                                </div>
+                            </td>
+                            <td>@Model.RoleClaims[i].DisplayValue.Split('.')[1]</td>
+                            <td>@Model.RoleClaims[i].DisplayValue.Split('.')[2]</td>
+                        </tr>                        
+                    }
+                </tbody>
+            </table>
+            @*@for (int i = 0; i < Model.RoleClaims.Count; i++)
+            {
+                <div class="form-check">
+                    <input type="hidden" asp-for="@Model.RoleClaims[i].DisplayValue" />
+                    <input asp-for="@Model.RoleClaims[i].IsSelected" class="form-check-input" />
+                    <label class="form-check-label pb-2" asp-for="@Model.RoleClaims[i].IsSelected">
+                        @Model.RoleClaims[i].DisplayValue
+                    </label>
+                </div>
+            }*@
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">Enregistrer</button>
+            <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+        </div>
+    </div>
+</form>
